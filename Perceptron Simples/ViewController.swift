@@ -14,23 +14,28 @@ class ViewController: UIViewController {
     let x0 = -1
     var currentIndex = 0
     var error: CGFloat = 0
-    var lastIndexError = -1
+    var lastIndexError = -2
     var circleComplete = false
+    var numberOfTests = 0
     
     var weights = [CGFloat]()
     var arrayWithData = [[CGFloat]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.weights = generateWeight(withSize: 4, andRandomNumbers: false)
+        self.weights = generateWeight(withSize: 4, andRandomNumbers: true)
         self.splitValues(withText: self.readFromFile(withFile: "flowers"))
         
-        while !circleComplete && lastIndexError != currentIndex {
-            if currentIndex == lastIndexError-1{
-                circleComplete = true
-            }
+        while !circleComplete {
+            self.numberOfTests += 1
             compareResult(withResult: calculateWeight(withValues: self.arrayWithData[currentIndex]))
+            if currentIndex == lastIndexError-1 || (currentIndex == self.arrayWithData.count-1 && lastIndexError == 0){
+                circleComplete = true
+                print("Circle complete")
+            }
         }
+        print(numberOfTests)
+        print(self.weights)
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,7 +75,7 @@ class ViewController: UIViewController {
     
     func compareResult(withResult result: CGFloat){
         if result == self.arrayWithData[currentIndex].last{
-            print("Ok")
+            print("Ok: Current Index: \(self.currentIndex) Last Error: \(self.lastIndexError)")
             self.currentIndex += 1
             if self.currentIndex == self.arrayWithData.count {
                 self.currentIndex = 0
@@ -78,6 +83,7 @@ class ViewController: UIViewController {
         } else {
             print("Error")
             self.lastIndexError = self.currentIndex
+            recalculateWeights()
             self.error = self.arrayWithData[currentIndex].last!-result
         }
     }
