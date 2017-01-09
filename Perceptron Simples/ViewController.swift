@@ -10,16 +10,27 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    let learningRate = 0.5
+    let learningRate: CGFloat = 0.5
     let x0 = -1
+    var currentIndex = 0
+    var error: CGFloat = 0
+    var lastIndexError = -1
+    var circleComplete = false
     
+    var weights = [CGFloat]()
     var arrayWithData = [[CGFloat]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(generateWeight(withSize: 4, andRandomNumbers: false))
+        self.weights = generateWeight(withSize: 4, andRandomNumbers: false)
         self.splitValues(withText: self.readFromFile(withFile: "flowers"))
-        print(arrayWithData)
+        
+        while !circleComplete && lastIndexError != currentIndex {
+            if currentIndex == lastIndexError-1{
+                circleComplete = true
+            }
+            compareResult(withResult: calculateWeight(withValues: self.arrayWithData[currentIndex]))
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,15 +56,35 @@ class ViewController: UIViewController {
         return weights
     }
     
-    func calculateWeight(withWeight weights: [CGFloat], andValues values: [CGFloat]) -> CGFloat{
+    func calculateWeight(withValues values: [CGFloat]) -> CGFloat{
         var result: CGFloat = 0
-        for index in 0..<values.count{
-            result = result+(weights[index]*values[index])
+        for index in 0..<values.count-1{
+            result = result+(self.weights[index]*values[index])
         }
         if result > 0{
             return 1
         } else {
             return -1
+        }
+    }
+    
+    func compareResult(withResult result: CGFloat){
+        if result == self.arrayWithData[currentIndex].last{
+            print("Ok")
+            self.currentIndex += 1
+            if self.currentIndex == self.arrayWithData.count {
+                self.currentIndex = 0
+            }
+        } else {
+            print("Error")
+            self.lastIndexError = self.currentIndex
+            self.error = self.arrayWithData[currentIndex].last!-result
+        }
+    }
+    
+    func recalculateWeights(){
+        for index in 0..<self.weights.count{
+            self.weights[index] = self.weights[index]+learningRate*self.error*self.arrayWithData[currentIndex][index]
         }
     }
     
