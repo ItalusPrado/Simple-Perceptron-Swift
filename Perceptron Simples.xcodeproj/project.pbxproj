@@ -15,6 +15,7 @@
 		CE339E771E2199E700B2B285 /* Perceptron_SimplesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE339E761E2199E700B2B285 /* Perceptron_SimplesTests.swift */; };
 		CE339E821E2199E700B2B285 /* Perceptron_SimplesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE339E811E2199E700B2B285 /* Perceptron_SimplesUITests.swift */; };
 		CE339E901E21A2CC00B2B285 /* flowers.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE339E8F1E21A2CC00B2B285 /* flowers.txt */; };
+		CE339E921E24556800B2B285 /* or.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE339E911E24556800B2B285 /* or.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		CE339E811E2199E700B2B285 /* Perceptron_SimplesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Perceptron_SimplesUITests.swift; sourceTree = "<group>"; };
 		CE339E831E2199E700B2B285 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE339E8F1E21A2CC00B2B285 /* flowers.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flowers.txt; sourceTree = "<group>"; };
+		CE339E911E24556800B2B285 /* or.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = or.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +101,7 @@
 		CE339E601E2199E700B2B285 /* Perceptron Simples */ = {
 			isa = PBXGroup;
 			children = (
-				CE339E8F1E21A2CC00B2B285 /* flowers.txt */,
+				CE339E931E24556C00B2B285 /* FilesTest */,
 				CE339E611E2199E700B2B285 /* AppDelegate.swift */,
 				CE339E631E2199E700B2B285 /* ViewController.swift */,
 				CE339E651E2199E700B2B285 /* Main.storyboard */,
@@ -126,6 +128,15 @@
 				CE339E831E2199E700B2B285 /* Info.plist */,
 			);
 			path = "Perceptron SimplesUITests";
+			sourceTree = "<group>";
+		};
+		CE339E931E24556C00B2B285 /* FilesTest */ = {
+			isa = PBXGroup;
+			children = (
+				CE339E911E24556800B2B285 /* or.txt */,
+				CE339E8F1E21A2CC00B2B285 /* flowers.txt */,
+			);
+			name = FilesTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE339E921E24556800B2B285 /* or.txt in Resources */,
 				CE339E6C1E2199E700B2B285 /* LaunchScreen.storyboard in Resources */,
 				CE339E691E2199E700B2B285 /* Assets.xcassets in Resources */,
 				CE339E671E2199E700B2B285 /* Main.storyboard in Resources */,

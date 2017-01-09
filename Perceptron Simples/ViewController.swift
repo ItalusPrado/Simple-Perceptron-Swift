@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     let learningRate: CGFloat = 0.5
-    let x0 = -1
+    let x0: CGFloat = 1
     var currentIndex = 0
     var error: CGFloat = 0
     var lastIndexError = -2
@@ -23,16 +23,17 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.weights = generateWeight(withSize: 4, andRandomNumbers: true)
-        self.splitValues(withText: self.readFromFile(withFile: "flowers"))
+        self.weights = generateWeight(withSize: 3, andRandomNumbers: false)
+        self.splitValues(withText: self.readFromFile(withFile: "or"))
         
         while !circleComplete {
             self.numberOfTests += 1
-            compareResult(withResult: calculateWeight(withValues: self.arrayWithData[currentIndex]))
             if currentIndex == lastIndexError-1 || (currentIndex == self.arrayWithData.count-1 && lastIndexError == 0){
                 circleComplete = true
+                print("Last error = \(self.lastIndexError)")
                 print("Circle complete")
             }
+            compareResult(withResult: calculateWeight(withValues: self.arrayWithData[currentIndex]))
         }
         print(numberOfTests)
         print(self.weights)
@@ -69,26 +70,32 @@ class ViewController: UIViewController {
         if result > 0{
             return 1
         } else {
-            return -1
+            return 0
         }
     }
     
     func compareResult(withResult result: CGFloat){
+        print("Current Weights: \(self.weights)")
         if result == self.arrayWithData[currentIndex].last{
-            print("Ok: Current Index: \(self.currentIndex) Last Error: \(self.lastIndexError)")
+            print("Entrada: \(self.currentIndex) OK")
+            //print("Ok: Current Index: \(self.currentIndex) Last Error: \(self.lastIndexError)")
             self.currentIndex += 1
             if self.currentIndex == self.arrayWithData.count {
                 self.currentIndex = 0
             }
         } else {
-            print("Error")
+            print("Entrada: \(self.currentIndex) Error")
+            //print("Error Result: \(result) Certo: \(self.arrayWithData[currentIndex].last)")
             self.lastIndexError = self.currentIndex
-            recalculateWeights()
+            self.circleComplete = false
             self.error = self.arrayWithData[currentIndex].last!-result
+            recalculateWeights()
+            
         }
     }
     
     func recalculateWeights(){
+        print("Error: \(self.error)")
         for index in 0..<self.weights.count{
             self.weights[index] = self.weights[index]+learningRate*self.error*self.arrayWithData[currentIndex][index]
         }
@@ -122,6 +129,7 @@ class ViewController: UIViewController {
         
         for array in arrayFinished{
             var floats = [CGFloat]()
+            floats.append(self.x0)
             for index in array{
                 floats.append(CGFloat(NumberFormatter().number(from: index
                     )!))
