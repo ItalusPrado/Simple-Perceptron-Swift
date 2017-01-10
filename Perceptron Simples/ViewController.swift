@@ -23,8 +23,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.weights = generateWeight(withSize: 3, andRandomNumbers: false)
         self.splitValues(withText: self.readFromFile(withFile: "or"))
+        self.weights = generateWeight(withSize: self.arrayWithData.first!.count-1, andRandomNumbers: false)
         
         while !circleComplete {
             self.numberOfTests += 1
