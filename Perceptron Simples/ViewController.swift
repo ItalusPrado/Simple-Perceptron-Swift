@@ -23,12 +23,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.splitValues(withText: self.readFromFile(withFile: "or"))
+        self.splitValues(withText: self.readFromFile(withFile: "flowers"))
         self.weights = generateWeight(withSize: self.arrayWithData.first!.count-1, andRandomNumbers: false)
         
         while !circleComplete {
             self.numberOfTests += 1
-            if currentIndex == lastIndexError-1 || (currentIndex == self.arrayWithData.count-1 && lastIndexError == 0){
+            if currentIndex == lastIndexError{
                 circleComplete = true
                 print("Last error = \(self.lastIndexError)")
                 print("Circle complete")
@@ -78,11 +78,6 @@ class ViewController: UIViewController {
         print("Current Weights: \(self.weights)")
         if result == self.arrayWithData[currentIndex].last{
             print("Entrada: \(self.currentIndex) OK")
-            //print("Ok: Current Index: \(self.currentIndex) Last Error: \(self.lastIndexError)")
-            self.currentIndex += 1
-            if self.currentIndex == self.arrayWithData.count {
-                self.currentIndex = 0
-            }
         } else {
             print("Entrada: \(self.currentIndex) Error")
             //print("Error Result: \(result) Certo: \(self.arrayWithData[currentIndex].last)")
@@ -90,7 +85,10 @@ class ViewController: UIViewController {
             self.circleComplete = false
             self.error = self.arrayWithData[currentIndex].last!-result
             recalculateWeights()
-            
+        }
+        self.currentIndex += 1
+        if self.currentIndex == self.arrayWithData.count {
+            self.currentIndex = 0
         }
     }
     
